@@ -20,7 +20,7 @@ body {
 }
 
 .app-shell {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 32px 24px 48px;
   display: flex;
@@ -56,7 +56,7 @@ body {
 
 .panels {
   display: grid;
-  grid-template-columns: minmax(320px, 1fr) minmax(360px, 1fr);
+  grid-template-columns: minmax(500px, 1fr) minmax(500px, 1fr);
   gap: 24px;
 }
 
@@ -117,7 +117,7 @@ body {
 
 .code-area {
   width: 100%;
-  min-height: 320px;
+  min-height: 480px;
   background: rgba(4, 9, 16, 0.9);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -136,7 +136,7 @@ body {
 .preview-panel {
   display: flex;
   flex-direction: column;
-  min-height: 500px;
+  min-height: 600px;
 }
 
 .preview-panel iframe {
