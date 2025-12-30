@@ -81,4 +81,87 @@ function downloadZip() {
 const downloadZipBtn = document.getElementById('download-zip');
 downloadZipBtn.addEventListener('click', downloadZip);
 
+// Get current active editor
+function getCurrentEditor() {
+  const activeTab = document.querySelector('.tab-button.active');
+  const target = activeTab.dataset.target;
+  if (target === 'html') return htmlEditor;
+  if (target === 'css') return cssEditor;
+  if (target === 'script') return scriptEditor;
+  return htmlEditor;
+}
+
+// Toast notification function
+function showToast(message) {
+  const toastContainer = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  toastContainer.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+// Copy button functionality
+const copyBtn = document.getElementById('copy-btn');
+copyBtn.addEventListener('click', async () => {
+  const editor = getCurrentEditor();
+  const code = editor.getValue();
+  try {
+    await navigator.clipboard.writeText(code);
+    copyBtn.style.color = '#43d9a0';
+    showToast('Text copied');
+    setTimeout(() => {
+      copyBtn.style.color = '';
+    }, 1000);
+  } catch (err) {
+    console.error('Failed to copy:', err);
+    showToast('Failed to copy');
+  }
+});
+
+// Paste button functionality
+const pasteBtn = document.getElementById('paste-btn');
+pasteBtn.addEventListener('click', async () => {
+  try {
+    const text = await navigator.clipboard.readText();
+    const editor = getCurrentEditor();
+    editor.setValue(text);
+    pasteBtn.style.color = '#43d9a0';
+    showToast('Pasted from clipboard');
+    setTimeout(() => {
+      pasteBtn.style.color = '';
+    }, 1000);
+  } catch (err) {
+    console.error('Failed to paste:', err);
+    showToast('Failed to paste');
+  }
+});
+
+// Clear button functionality
+const clearBtn = document.getElementById('clear-btn');
+clearBtn.addEventListener('click', () => {
+  const editor = getCurrentEditor();
+  editor.setValue('');
+  clearBtn.style.color = '#43d9a0';
+  showToast('Cleared');
+  setTimeout(() => {
+    clearBtn.style.color = '';
+  }, 1000);
+});
+
+// Undo button functionality
+const undoBtn = document.getElementById('undo-btn');
+undoBtn.addEventListener('click', () => {
+  const editor = getCurrentEditor();
+  editor.undo();
+  undoBtn.style.color = '#43d9a0';
+  showToast('Changes undone');
+  setTimeout(() => {
+    undoBtn.style.color = '';
+  }, 1000);
+});
+
 refreshPreview();
