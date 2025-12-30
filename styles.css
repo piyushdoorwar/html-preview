@@ -87,6 +87,27 @@ body {
   color: rgba(255, 255, 255, 0.65);
 }
 
+.download-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.download-buttons button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.download-buttons button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
 .tab-bar {
   display: flex;
   gap: 6px;
@@ -131,6 +152,30 @@ body {
 
 .code-area.hidden {
   display: none;
+}
+
+.code-area {
+  display: none;
+}
+
+.CodeMirror {
+  width: 100%;
+  min-height: 500px;
+  background: rgba(4, 9, 16, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: "JetBrains Mono", "Fira Code", "Space Grotesk", monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.CodeMirror-gutters {
+  background: rgba(4, 9, 16, 0.9);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.CodeMirror-linenumber {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .preview-panel {
