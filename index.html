@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Preview Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">live html preview</p>
+          <h1>Preview Studio</h1>
+        </div>
+        <p class="header-note">Compose HTML, CSS, and JS on the left and watch the render update instantly.</p>
+      </header>
+      <div class="panels">
+        <section class="editor-panel">
+          <div class="panel-title">
+            <div>
+              <strong>Code workshop</strong>
+              <p>Keep the markup, styles, and scripts in sync.</p>
+            </div>
+          </div>
+          <div class="tab-bar">
+            <button class="tab-button active" data-target="html">HTML</button>
+            <button class="tab-button" data-target="css">CSS</button>
+            <button class="tab-button" data-target="script">Script</button>
+          </div>
+          <div class="editor-stack">
+            <textarea id="html" class="code-area" data-panel="html" spellcheck="false">&lt;main&gt;
+  &lt;h2&gt;Live preview&lt;/h2&gt;
+  &lt;p&gt;Edit the panels to experiment with new ideas.&lt;/p&gt;
+  &lt;button&gt;Press me&lt;/button&gt;
+&lt;/main&gt;</textarea>
+            <textarea id="css" class="code-area hidden" data-panel="css" spellcheck="false">:root {
+  color-scheme: dark;
+  --accent: #43d9a0;
+}
+
+body {
+  font-family: "Space Grotesk", "SF Pro Display", system-ui, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+main {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  padding: 24px;
+  text-align: center;
+}
+
+button {
+  border: 0;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), #5b7ff3);
+  color: #fff;
+  cursor: pointer;
+}
+</textarea>
+            <textarea id="script" class="code-area hidden" data-panel="script" spellcheck="false">const button = document.querySelector("button");
+if (button) {
+  button.addEventListener("click", () => {
+    const dialog = document.createElement("div");
+    dialog.textContent = "Button pressed!";
+    dialog.style.marginTop = "16px";
+    dialog.style.opacity = "0";
+    dialog.style.transition = "opacity 0.3s ease";
+    document.body.appendChild(dialog);
+    requestAnimationFrame(() => {
+      dialog.style.opacity = "1";
+    });
+    setTimeout(() => dialog.remove(), 1500);
+  });
+}
+</textarea>
+          </div>
+        </section>
+        <section class="preview-panel">
+          <div class="panel-title">
+            <div>
+              <strong>Live preview</strong>
+              <p>Reflects every keystroke.</p>
+            </div>
+          </div>
+          <iframe id="preview-iframe" title="html preview"></iframe>
+        </section>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

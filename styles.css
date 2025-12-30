@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap");
+
+:root {
+  color: #f5f7fb;
+  background: #040910;
+  font-family: "Space Grotesk", "SF Pro Display", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% -10%, rgba(67, 217, 160, 0.4), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(91, 127, 243, 0.5), transparent 40%),
+    #040910;
+  color: #f5f7fb;
+}
+
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.app-header h1 {
+  margin: 2px 0 4px;
+  font-size: 2.4rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.header-note {
+  margin: 0;
+  max-width: 360px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(360px, 1fr);
+  gap: 24px;
+}
+
+.editor-panel,
+.preview-panel {
+  background: rgba(9, 17, 34, 0.85);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  box-shadow: 0 25px 55px rgba(4, 9, 16, 0.5);
+}
+
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.panel-title strong {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.panel-title p {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.tab-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, #43d9a0, #5b7ff3);
+  border-color: transparent;
+  color: #070b14;
+}
+
+.editor-stack {
+  position: relative;
+}
+
+.code-area {
+  width: 100%;
+  min-height: 320px;
+  background: rgba(4, 9, 16, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f5f7fb;
+  font-family: "JetBrains Mono", "Fira Code", "Space Grotesk", monospace;
+  font-size: 1rem;
+  padding: 16px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.code-area.hidden {
+  display: none;
+}
+
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+}
+
+.preview-panel iframe {
+  border: 0;
+  flex: 1;
+  border-radius: 16px;
+  background: #090f1d;
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 900px) {
+  .panels {
+    grid-template-columns: 1fr;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
