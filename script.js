@@ -2,12 +2,14 @@ const iframe = document.getElementById("preview-iframe");
 const tabs = document.querySelectorAll(".tab-button");
 let updateTimer = null;
 let htmlEditor, cssEditor, scriptEditor;
+let isLightMode = false;
 
 function composePreview() {
   const html = htmlEditor.getValue();
   const css = cssEditor.getValue();
   const script = scriptEditor.getValue();
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${css}</style></head><body>${html}<script>${script}</script></body></html>`;
+  const bodyClass = isLightMode ? ' class="light-mode"' : '';
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${css}</style></head><body${bodyClass}>${html}<script>${script}</script></body></html>`;
 }
 
 function refreshPreview() {
@@ -26,6 +28,17 @@ tabs.forEach((tab) => {
     tabs.forEach((btn) => btn.classList.remove("active"));
     tab.classList.add("active");
     const target = tab.dataset.target;
+    
+    // Update language label
+    const languageLabel = document.getElementById('language-label');
+    if (target === 'html') {
+      languageLabel.textContent = 'HTML';
+    } else if (target === 'css') {
+      languageLabel.textContent = 'CSS';
+    } else if (target === 'script') {
+      languageLabel.textContent = 'JAVASCRIPT';
+    }
+    
     htmlEditor.getWrapperElement().style.display = target === 'html' ? 'block' : 'none';
     cssEditor.getWrapperElement().style.display = target === 'css' ? 'block' : 'none';
     scriptEditor.getWrapperElement().style.display = target === 'script' ? 'block' : 'none';
@@ -35,23 +48,29 @@ tabs.forEach((tab) => {
 // Initialize editors
 htmlEditor = CodeMirror.fromTextArea(document.getElementById('html'), {
   mode: 'htmlmixed',
-  theme: 'monokai',
+  theme: 'dracula',
   lineNumbers: true,
   lineWrapping: true,
+  styleActiveLine: true,
+  matchBrackets: true,
 });
 
 cssEditor = CodeMirror.fromTextArea(document.getElementById('css'), {
   mode: 'css',
-  theme: 'monokai',
+  theme: 'dracula',
   lineNumbers: true,
   lineWrapping: true,
+  styleActiveLine: true,
+  matchBrackets: true,
 });
 
 scriptEditor = CodeMirror.fromTextArea(document.getElementById('script'), {
   mode: 'javascript',
-  theme: 'monokai',
+  theme: 'dracula',
   lineNumbers: true,
   lineWrapping: true,
+  styleActiveLine: true,
+  matchBrackets: true,
 });
 
 // Initially show html
@@ -111,7 +130,7 @@ copyBtn.addEventListener('click', async () => {
   const code = editor.getValue();
   try {
     await navigator.clipboard.writeText(code);
-    copyBtn.style.color = '#43d9a0';
+    copyBtn.style.color = '#FFD700';
     showToast('Text copied');
     setTimeout(() => {
       copyBtn.style.color = '';
@@ -129,7 +148,7 @@ pasteBtn.addEventListener('click', async () => {
     const text = await navigator.clipboard.readText();
     const editor = getCurrentEditor();
     editor.setValue(text);
-    pasteBtn.style.color = '#43d9a0';
+    pasteBtn.style.color = '#FFD700';
     showToast('Pasted from clipboard');
     setTimeout(() => {
       pasteBtn.style.color = '';
@@ -145,7 +164,7 @@ const clearBtn = document.getElementById('clear-btn');
 clearBtn.addEventListener('click', () => {
   const editor = getCurrentEditor();
   editor.setValue('');
-  clearBtn.style.color = '#43d9a0';
+  clearBtn.style.color = '#FFD700';
   showToast('Cleared');
   setTimeout(() => {
     clearBtn.style.color = '';
@@ -157,11 +176,30 @@ const undoBtn = document.getElementById('undo-btn');
 undoBtn.addEventListener('click', () => {
   const editor = getCurrentEditor();
   editor.undo();
-  undoBtn.style.color = '#43d9a0';
+  undoBtn.style.color = '#FFD700';
   showToast('Changes undone');
   setTimeout(() => {
     undoBtn.style.color = '';
   }, 1000);
+});
+
+// Theme toggle for preview only
+const themeToggle = document.getElementById('theme-toggle');
+const sunIcon = themeToggle.querySelector('.sun-icon');
+const moonIcon = themeToggle.querySelector('.moon-icon');
+
+themeToggle.addEventListener('click', () => {
+  isLightMode = !isLightMode;
+  
+  // Toggle icons
+  sunIcon.classList.toggle('hidden');
+  moonIcon.classList.toggle('hidden');
+  
+  // Refresh preview with new theme
+  refreshPreview();
+  
+  // Show toast
+  showToast(isLightMode ? 'Light mode enabled' : 'Dark mode enabled');
 });
 
 refreshPreview();
