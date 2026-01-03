@@ -4,6 +4,51 @@ let updateTimer = null;
 let htmlEditor, cssEditor, scriptEditor;
 let isLightMode = false;
 
+// Resizer functionality
+const resizer = document.querySelector('.resizer');
+const editorPanel = document.querySelector('.editor-panel');
+const previewPanel = document.querySelector('.preview-panel');
+let isResizing = false;
+
+if (resizer) {
+  resizer.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    resizer.classList.add('resizing');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isResizing) return;
+
+    const containerRect = document.querySelector('.panels').getBoundingClientRect();
+    const offsetX = e.clientX - containerRect.left;
+    const totalWidth = containerRect.width;
+    const editorWidth = (offsetX / totalWidth) * 100;
+    const previewWidth = 100 - editorWidth;
+
+    // Set minimum widths (25% each)
+    if (editorWidth >= 25 && previewWidth >= 25) {
+      editorPanel.style.flex = `0 0 ${editorWidth}%`;
+      previewPanel.style.flex = `0 0 ${previewWidth}%`;
+      
+      // Refresh CodeMirror to prevent display issues
+      if (htmlEditor) htmlEditor.refresh();
+      if (cssEditor) cssEditor.refresh();
+      if (scriptEditor) scriptEditor.refresh();
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isResizing) {
+      isResizing = false;
+      resizer.classList.remove('resizing');
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+  });
+}
+
 function composePreview() {
   const html = htmlEditor.getValue();
   const css = cssEditor.getValue();

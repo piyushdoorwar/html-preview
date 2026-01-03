@@ -85,61 +85,93 @@ body::before {
 .app-shell {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 32px 24px 48px;
+  padding: 1.5rem clamp(1.5rem, 3vw, 2.5rem) 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  height: 100vh;
   position: relative;
   z-index: 1;
 }
 
 .app-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
+  align-items: center;
+  padding-bottom: 1.25rem;
+  flex-shrink: 0;
+}
+
+.header-content {
+  flex: 1;
 }
 
 .app-header h1 {
-  margin: 2px 0 4px;
-  font-size: 2.8rem;
+  margin: 0;
+  font-size: 2rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+  line-height: 1;
 }
 
-.title-html {
+.title-yellow {
   color: var(--yellow);
-  text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.title-preview {
+.title-purple {
   background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-size: 0.75rem;
-  margin: 0;
-  color: var(--text-muted);
-  font-weight: 600;
+.header-separator {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 1.25rem;
+  flex-shrink: 0;
 }
 
-.header-note {
-  margin: 0;
-  max-width: 420px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  font-size: 0.95rem;
+.resizer {
+  width: 12px;
+  cursor: col-resize;
+  background: transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.resizer::before {
+  content: '';
+  width: 3px;
+  height: 40px;
+  background: var(--border-light);
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.resizer:hover::before {
+  background: var(--purple);
+  height: 60px;
+  box-shadow: var(--shadow-purple-glow);
+}
+
+.resizer.resizing::before {
+  background: var(--yellow);
+  box-shadow: var(--shadow-yellow-glow);
 }
 
 .panels {
-  display: grid;
-  grid-template-columns: minmax(500px, 1fr) minmax(500px, 1fr);
-  gap: 24px;
+  display: flex;
+  gap: 0;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 .editor-panel,
@@ -151,6 +183,17 @@ body::before {
   box-shadow: var(--shadow-large);
   position: relative;
   overflow: hidden;
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-large);
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
 }
 
 .editor-panel::before,
@@ -272,9 +315,9 @@ body::before {
 .language-label {
   background: linear-gradient(135deg, var(--yellow), var(--yellow-dark));
   color: var(--bg-primary);
-  padding: 6px 14px;
+  padding: 0.4rem 0.875rem;
   border-radius: 8px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -382,6 +425,10 @@ body::before {
 
 .editor-stack {
   position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .code-area {
@@ -408,7 +455,7 @@ body::before {
 
 .CodeMirror {
   width: 100%;
-  min-height: 500px;
+  height: 100%;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 12px;
   border: 1px solid var(--purple);
@@ -478,9 +525,7 @@ body::before {
 }
 
 .preview-panel {
-  display: flex;
-  flex-direction: column;
-  min-height: 600px;
+  min-height: 0;
 }
 
 .preview-panel iframe {
@@ -514,15 +559,19 @@ body::before {
 
 @media (max-width: 900px) {
   .panels {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 
-  .app-header {
-    flex-direction: column;
-    align-items: flex-start;
+  .app-header h1 {
+    font-size: 1.75rem;
   }
   
-  .app-header h1 {
-    font-size: 2.2rem;
+  .resizer {
+    display: none;
+  }
+  
+  .app-shell {
+    height: auto;
+    min-height: 100vh;
   }
 }
