@@ -77,11 +77,11 @@ tabs.forEach((tab) => {
     // Update language label
     const languageLabel = document.getElementById('language-label');
     if (target === 'html') {
-      languageLabel.textContent = 'HTML';
+      languageLabel.textContent = '.html';
     } else if (target === 'css') {
-      languageLabel.textContent = 'CSS';
+      languageLabel.textContent = '.css';
     } else if (target === 'script') {
-      languageLabel.textContent = 'JAVASCRIPT';
+      languageLabel.textContent = '.js';
     }
     
     htmlEditor.getWrapperElement().style.display = target === 'html' ? 'block' : 'none';

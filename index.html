@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HTML Preview Studio</title>
+    <title>HTML Preview</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
@@ -21,11 +21,10 @@
           <h1><span class="title-yellow">HTML</span> <span class="title-purple">Preview</span></h1>
         </div>
       </header>
-      <div class="header-separator"></div>
       
-      <div class="main-toolbar">
-        <div class="toolbar-section">
-          <span class="toolbar-section-label">FILE</span>
+      <div class="toolbar">
+        <div class="toolbar-group">
+          <span class="toolbar-label">FILE</span>
           <button id="download-zip" class="toolbar-btn" data-tooltip="Download ZIP">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -33,12 +32,6 @@
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
           </button>
-        </div>
-        
-        <div class="toolbar-divider"></div>
-        
-        <div class="toolbar-section">
-          <span class="toolbar-section-label">EDIT</span>
           <button id="copy-btn" class="toolbar-btn" data-tooltip="Copy code">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -69,16 +62,8 @@
         
         <div class="toolbar-divider"></div>
         
-        <div class="toolbar-section toolbar-tabs">
-          <button class="tab-button active" data-target="html">HTML</button>
-          <button class="tab-button" data-target="css">CSS</button>
-          <button class="tab-button" data-target="script">JavaScript</button>
-        </div>
-        
-        <div class="toolbar-divider"></div>
-        
-        <div class="toolbar-section">
-          <span class="toolbar-section-label">MODE</span>
+        <div class="toolbar-group">
+          <span class="toolbar-label">MODE</span>
           <button id="theme-toggle" class="toolbar-btn" data-tooltip="Toggle dark/light mode">
             <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="5"></circle>
@@ -96,15 +81,21 @@
             </svg>
           </button>
         </div>
+
+        <div class="toolbar-spacer"></div>
+
+        <div class="toolbar-tabs">
+          <button class="tab-button active" data-target="html">HTML</button>
+          <button class="tab-button" data-target="css">CSS</button>
+          <button class="tab-button" data-target="script">JavaScript</button>
+        </div>
       </div>
       
       <div class="panels">
         <section class="editor-panel">
           <div class="panel-header">
-            <div class="panel-header-left">
-              <span class="panel-title">CODE WORKSHOP</span>
-              <span class="language-label" id="language-label">HTML</span>
-            </div>
+            <span class="panel-title">EDITOR</span>
+            <span class="language-label" id="language-label">.html</span>
           </div>
           <div class="editor-stack">
             <textarea id="html" class="code-area" data-panel="html" spellcheck="false">&lt;div class="app-container"&gt;
