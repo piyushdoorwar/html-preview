@@ -54,7 +54,13 @@ function composePreview() {
   const css = cssEditor.getValue();
   const script = scriptEditor.getValue();
   const bodyClass = isLightMode ? ' class="light-mode"' : '';
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${css}</style></head><body${bodyClass}>${html}<script>${script}</script></body></html>`;
+  const scrollbarStyles = `
+    ::-webkit-scrollbar { width: 12px; height: 12px; }
+    ::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #8B5CF6, #6739B7); border-radius: 10px; border: 2px solid #1a1a1a; }
+    ::-webkit-scrollbar-thumb:hover { background: linear-gradient(135deg, #A78BFA, #8B5CF6); }
+  `;
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${scrollbarStyles}${css}</style></head><body${bodyClass}>${html}<script>${script}</script></body></html>`;
 }
 
 function refreshPreview() {

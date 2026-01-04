@@ -595,6 +595,27 @@ body::before {
   box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4);
 }
 
+/* Scrollbar styling for iframe content */
+.preview-panel iframe::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.preview-panel iframe::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+}
+
+.preview-panel iframe::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-dark));
+  border-radius: 10px;
+  border: 2px solid var(--bg-secondary);
+}
+
+.preview-panel iframe::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--purple-light), var(--purple));
+}
+
 /* Global scrollbar styling */
 ::-webkit-scrollbar {
   width: 12px;
