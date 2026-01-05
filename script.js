@@ -60,7 +60,9 @@ function composePreview() {
     ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #8B5CF6, #6739B7); border-radius: 10px; border: 2px solid #1a1a1a; }
     ::-webkit-scrollbar-thumb:hover { background: linear-gradient(135deg, #A78BFA, #8B5CF6); }
   `;
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${scrollbarStyles}${css}</style></head><body${bodyClass}>${html}<script>${script}</script></body></html>`;
+  // Escape closing script tag to prevent parsing issues
+  const escapedScript = script.replace(/<\/script>/gi, '<\\/script>');
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${scrollbarStyles}${css}</style></head><body${bodyClass}>${html}<script>${escapedScript}<\/script></body></html>`;
 }
 
 function refreshPreview() {
@@ -93,6 +95,11 @@ tabs.forEach((tab) => {
     htmlEditor.getWrapperElement().style.display = target === 'html' ? 'block' : 'none';
     cssEditor.getWrapperElement().style.display = target === 'css' ? 'block' : 'none';
     scriptEditor.getWrapperElement().style.display = target === 'script' ? 'block' : 'none';
+    
+    // Refresh the active editor to ensure content displays properly
+    if (target === 'html') htmlEditor.refresh();
+    else if (target === 'css') cssEditor.refresh();
+    else if (target === 'script') scriptEditor.refresh();
   });
 });
 
@@ -537,7 +544,7 @@ function showNotification(message) {
 // Primary action handler
 function handlePrimaryAction() {
   const messages = [
-    '✨ Welcome aboard! Let\'s build something amazing!',
+    '✨ Welcome aboard! Lets build something amazing!',
     '🚀 Ready to launch your creativity!',
     '🎉 Exciting journey ahead!',
     '⚡ Powered up and ready to go!',
@@ -582,13 +589,18 @@ if (hero) {
   document.addEventListener('mousemove', (e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 10;
     const y = (e.clientY / window.innerHeight - 0.5) * 10;
-    hero.style.transform = \`translate(\${x}px, \${y}px)\`;
+    hero.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
   });
 }`;
 
   htmlEditor.setValue(sampleHTML);
   cssEditor.setValue(sampleCSS);
   scriptEditor.setValue(sampleJS);
+  
+  // Refresh all editors to ensure content displays
+  htmlEditor.refresh();
+  cssEditor.refresh();
+  scriptEditor.refresh();
   
   loadSampleBtn.style.color = '#FFD700';
   showToast('Sample code loaded');
